@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="/static/img/logo_kabum_.png">
+</head>
+
+    <body>
+    
+        <header>
+            <div class="blue-line">
+                <div class="header">
+                    <img src="/static/img/logo_kabum_.png" alt="Logo Kabum">
+                    <ul>
+                        <li><a href="/list">Usuários Ativos</a></li>
+                        <li><a href="/disable">Usuários Inativos</a></li>
+                    </ul>
+                </div>    
+            </div>
+            <div class="red-line"></div>
+            
+        </header>
+
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>RG</th>
+                    <th>Email</th>
+                    <th>Data de Nascimento</th>
+                    <th>Telefone 1</th>
+                    <th>Telefone 2</th>
+                    <th>Endereço Principal</th>
+                    <th>Endereço2</th>
+                    <th>Endereço3</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                {% if user.active == False %}
+                <tr>
+                    <td>{{ user.fullname }}</td>
+                    <td>{{ user.cpf }}</td>
+                    <td>{{ user.rg }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.birthday }}</td>
+                    <td>{{ user.phone1 }}</td>
+                    <td>{{ user.phone2 }}</td>
+                    <td>{{ user.adress }}</td>
+                    <td>{{ user.adress2 }}</td>
+                    <td>{{ user.adress3 }}</td>
+                    <td><button id="activation-button" data-userid="{{ user.fullname }}">Ativar</button></td> 
+
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        <script>
+             document.addEventListener('DOMContentLoaded', function() {
+        var activateButtons = document.querySelectorAll('[data-userid]');
+
+        activateButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var userId = button.getAttribute('data-userid');
+                // Faz uma requisição para o servidor para ativar o usuário com base no fullname
+                fetch('/activate-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ fullname: userId })
+                })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Lógica para atualizar a interface do usuário, se necessário
+                    if (data.success) {
+                        // O usuário foi ativado com sucesso
+                        alert('Usuário ativado com sucesso!');
+                        // Atualize a interface do usuário conforme necessário
+                    } else {
+                        // Ocorreu um erro ao ativar o usuário
+                        alert('Erro ao ativar o usuário. Por favor, tente novamente mais tarde.');
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Erro:', error);
+                });
+            });
+        });
+    });
+        </script>
+
+    </body>
+
+</html>

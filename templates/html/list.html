@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Visualização dos dados</title>
+    <link rel="icon" type="image/x-icon" href="/static/img/logo_kabum_.png">
+</head>
+
+    <body>
+
+        <header>
+            <div class="blue-line">
+                <div class="header">
+                    <img src="/static/img/logo_kabum_.png" alt="Logo Kabum">
+                    <ul>
+                        <li><a href="/list">Usuários Ativos</a></li>
+                        <li><a href="/disable">Usuários Inativos</a></li>
+                    </ul>
+                </div>    
+            </div>
+            <div class="red-line"></div>
+            
+        </header>
+
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>RG</th>
+                    <th>Email</th>
+                    <th>Data de Nascimento</th>
+                    <th>Telefone 1</th>
+                    <th>Telefone 2</th>
+                    <th>Endereço Principal</th>
+                    <th>Endereço2</th>
+                    <th>Endereço3</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                {% if user.active == True %}
+                <tr>
+                    <td>{{ user.fullname }}</td>
+                    <td>{{ user.cpf }}</td>
+                    <td>{{ user.rg }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.birthday }}</td>
+                    <td>{{ user.phone1 }}</td>
+                    <td>{{ user.phone2 }}</td>
+                    <td>{{ user.adress }}</td>
+                    <td>{{ user.adress2 }}</td>
+                    <td>{{ user.adress3 }}</td>
+                    <td><button class="edit-button" id="edit-button" data-userid="{{ user.fullname }}" >Editar</button></td>
+                    <td><button class="disable-button" id="disable-button" data-userid="{{ user.fullname }}">Desativar</button></td>
+
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var disableButtons = document.querySelectorAll('.disable-button');
+
+        disableButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var userId = button.getAttribute('data-userid');
+                fetch('/disable-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ fullname: userId })
+                })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (data.success) {
+                        alert('Usuário desativado com sucesso!');
+                    } else {
+                        alert('Erro ao desativar o usuário. Por favor, tente novamente mais tarde.');
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Erro:', error);
+                });
+            });
+        });
+    //função de edição
+
+        var edit_users = document.querySelectorAll('.edit-button');
+
+        edit_users.forEach(function(button) {
+            button.addEventListener('click', function() {
+                window.location.href = `/edit/${fullname}`;
+            //     var userfullname = button.getAttribute('data-userid');
+            //     fetch('/edit', {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: JSON.stringify({ fullname: userfullname })
+            //     })
+            //     .then(function(response) {
+            //         return response.json();
+            //     })
+            //     .catch(function(error) {
+            //         console.error('Erro:', error);
+            //     });
+            });
+        });
+    });
+
+
+
+
+</script>
+
+    </body>
+
+</html>

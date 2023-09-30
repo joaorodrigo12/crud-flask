@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Formulário de cadstro</title>
+    <link rel="icon" type="image/x-icon" href="/static/img/logo_kabum_.png">
+</head>
+
+<body>
+
+    <header>
+        <div class="blue-line">
+            <div class="header">
+                <img src="/static/img/logo_kabum_.png" alt="Logo Kabum">
+                <ul>
+                    <li><a href="/list">Usuários Ativos</a></li>
+                    <li><a href="/disable">Usuários Inativos</a></li>
+                </ul>
+            </div>    
+        </div>
+        <div class="red-line"></div>
+        
+    </header>
+    <div class="container">
+        <div class="form">
+            <form id="edit-form" action="register" method="post">
+                <div class="form-header">
+                    <div class="title">
+                        <h1>EDITAR CONTA</h1>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-box">
+                        <input id="fullname" type="text" name="fullname" placeholder="Nome completo*" required>
+                    </div>
+
+                    <div class="input-box">
+                        <input id="cpf" type="text" name="cpf" placeholder="CPF*" required>
+                    </div>
+
+                    <div class="input-box">
+                        <input id="rg" type="text" name="rg" placeholder="RG*" required>
+                    </div>
+
+                    <div class="input-box">
+                        <input id="email" type="email" name="email" placeholder="E-mail*" required>
+                    </div>
+
+                    <div class="input-box">
+                        <input id="birthday" type="date" name="birthday" placeholder="Data de nascimento*" required>
+                    </div>
+
+                    <div class="input-box">
+                        <input id="phone1" type="tel" name="phone1" placeholder="Telefone Celular*" required>
+                    </div>
+
+                    <div class="input-box">
+                        <input id="phone2" type="tel" name="phone2" placeholder="Telefone Celular 2">
+                    </div>
+
+                    <div class="input-box">
+                        <input id="adress" type="h" name="adress" placeholder="Endereço Principal*" required>
+                    </div>
+                </div>
+                
+                <div class="continue-button">
+                    <button id = "#">CONFIRMAR EDIÇÃO</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+       
+    </script>
+</body>
+
+</html>
