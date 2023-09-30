@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, flash, redirect, jsonify
 import json
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "palavra-secreta123"
+app.config['SECRET_KEY'] = "kabum-case"
 
 
 @app.route("/")
